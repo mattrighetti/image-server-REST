@@ -28,7 +28,7 @@ function initKnex() {
                 "port" :"3306",
                 "user" : "root",
                 "password" : "password",
-                "database" : "fdm-repository-db"
+                "database" : "image-server"
             },
             useNullAsDefault: true
         });
@@ -56,7 +56,7 @@ app.post('/register', function (req, res) {
         date: date
     };
 
-    db('user').insert(newUser).then((res) => {
+    db('users').insert(newUser).then((res) => {
         res.json({
             success: true,
             message: 'User registered successfully'
@@ -74,7 +74,7 @@ app.get('/login', function (req, res, next) {
     let email = req.body.email
     let password = req.body.password
 
-    db('user').select().where('email', email).andWhere('password', password).then(function(user) {
+    db('users').select().where('email', email).andWhere('password', password).then(function(user) {
         if(user[0].id) {
           res.cookie('loggedIn', 'true');
           res.cookie('loginDateTime', moment(new Date()).format())
@@ -89,6 +89,9 @@ app.get('/login', function (req, res, next) {
 
 // API to upload the image
 app.post("/saveImage", async function (req, res) {
+
+    let file = null
+
     try {
         if (!req.files) {
             res.send({
@@ -96,7 +99,7 @@ app.post("/saveImage", async function (req, res) {
                 message: 'No file uploaded'
             })
         } else {
-            let file = req.files.file;
+            file = req.files.file;
             const path = __dirname + '/other/images/' + file.name;
 
             file.mv(path, (error) => {
@@ -116,16 +119,33 @@ app.post("/saveImage", async function (req, res) {
                     return;
                 }
 
-                res.writeHead(200, {
-                    'Content-Type': 'application/json'
+                let image_data = {
+                    user: "TODO",
+                    image_name: file.name,
+                    date: new Date()
+                }
+        
+                knex('images').insert(image_data).then((res) => {
+                    
+                    res.writeHead(200, {
+                        'Content-Type': 'application/json'
+                    })
+
+                    res.end(JSON.stringify({
+                        status: 'success',
+                        path: '/images/' + file.name
+                    }))
+
+                }).catch((error) => {
+                    res.json({
+                        success: false,
+                        message: 'Something went wrong'
+                    })
                 })
 
-                res.end(JSON.stringify({
-                    status: 'success',
-                    path: '/images/' + file.name
-                }))
             })
         }
+
     } catch (err) {
         res.status(500).send(err)
     }
