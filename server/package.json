@@ -19,7 +19,8 @@
     "nodemon": "^2.0.2"
   },
   "scripts": {
-    "test": "TEST=true nodemon index.js"
+    "test": "TEST=true nodemon index.js",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC"
