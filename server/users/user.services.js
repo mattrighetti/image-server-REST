@@ -1,13 +1,15 @@
 const config = require('config.json');
 const jwt = require('jsonwebtoken');
 
-// users hardcoded for simplicity, store in a db for production applications
+// Database non required
 const users = [{ id: 0, email: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
+const images = [];
 
 module.exports = {
     authenticate,
     getAll,
-    registerUser
+    registerUser,
+    uploadImage
 };
 
 async function authenticate({ email, password }) {
@@ -52,4 +54,41 @@ async function getAll() {
         const { password, ...userWithoutPassword } = u;
         return userWithoutPassword;
     });
+}
+
+async function uploadImage(userId, files) {
+    let newFile = null
+
+    try {
+
+        if (!files) {
+            return {
+                status: false,
+                message: 'No file uploaded'
+            }
+        } else {
+            newFile = files.image;
+            const path = __dirname + '/../store/images/' + newFile.name; // Not really good looking
+
+            newFile.mv(path, (error) => {
+                
+                if (error) {
+                    throw error
+                }
+
+                let image_data = {
+                    user: 1,
+                    image_name: newFile.name,
+                    date: new Date()
+                }
+
+                images.push(image_data);
+
+                return image_data;
+            })
+        }
+
+    } catch (err) {
+        throw "Something went wrong";
+    }
 }

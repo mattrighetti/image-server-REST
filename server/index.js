@@ -4,6 +4,7 @@ const cors = require('cors');
 const jwt = require('./utils/jwt');
 const errorHandler = require('./utils/error_handler');
 const bodyParser = require("body-parser");
+const fileupload = require('express-fileupload')
 const app = express();
 
 const serverPort = process.env.PORT || 5000;
@@ -11,6 +12,7 @@ const serverPort = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(fileupload())
 app.use(jwt());
 
 app.use('/', require('./users/user.controller'));

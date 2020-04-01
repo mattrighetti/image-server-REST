@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router()
 const userService = require('./user.services')
+const config = require('config.json');
+const jwt = require('jsonwebtoken')
 
 module.exports = router;
 
@@ -32,64 +34,10 @@ router.get('/getAll', function (req, res, next) {
 
 // API to upload the image
 router.post("/saveImage", async function (req, res, next) {
-
-    let file = null
-
-    try {
-        if (!req.files) {
-            res.send({
-                status: false,
-                message: 'No file uploaded'
-            })
-        } else {
-            file = req.files.file;
-            const path = __dirname + '/other/images/' + file.name;
-
-            file.mv(path, (error) => {
-                if (error) {
-
-                    console.error(error);
-
-                    res.writeHead(500, {
-                        'Content-Type': 'application/json'
-                    })
-
-                    res.end(JSON.stringify({
-                        status: 'error',
-                        message: error
-                    }))
-
-                    return;
-                }
-
-                let image_data = {
-                    user: "TODO",
-                    image_name: file.name,
-                    date: new Date()
-                }
-        
-                knex('images').insert(image_data).then((res) => {
-                    
-                    res.writeHead(200, {
-                        'Content-Type': 'application/json'
-                    })
-
-                    res.end(JSON.stringify({
-                        status: 'success',
-                        path: '/images/' + file.name
-                    }))
-
-                }).catch((error) => {
-                    res.json({
-                        success: false,
-                        message: 'Something went wrong'
-                    })
-                })
-
-            })
-        }
-
-    } catch (err) {
-        res.status(500).send(err)
-    }
+    const usertoken = req.headers.authorization;
+    const token = usertoken.split(' ');
+    const decoded = jwt.verify(token[1], config.secret);
+    userService.uploadImage(decoded.id, req.files)
+        .then(data => res.json(data))
+        .catch(err => res.json(err));
 });
