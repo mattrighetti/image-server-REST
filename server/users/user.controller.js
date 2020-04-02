@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router()
 const userService = require('./user.services')
-const config = require('config.json');
-const jwt = require('jsonwebtoken')
 
 module.exports = router;
 
@@ -31,13 +29,3 @@ router.get('/getAll', function (req, res, next) {
         .then(users => res.json(users))
         .catch(err => next(err));
 })
-
-// API to upload the image
-router.post("/saveImage", async function (req, res, next) {
-    const usertoken = req.headers.authorization;
-    const token = usertoken.split(' ');
-    const decoded = jwt.verify(token[1], config.secret);
-    userService.uploadImage(decoded.id, req.files)
-        .then(data => res.json(data))
-        .catch(err => res.json(err));
-});

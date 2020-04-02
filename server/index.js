@@ -16,6 +16,7 @@ app.use(fileupload())
 app.use(jwt());
 
 app.use('/', require('./users/user.controller'));
+app.use('/images', require('./users/image.controller'));
 app.use(errorHandler);
 
 app.set("port", serverPort);
