@@ -1,8 +1,9 @@
 # Image Server REST
 A simple image server that uses REST APIs to register/login user
 
-|![Logo](https://grokonez.com/wp-content/uploads/2018/12/vue.js-nodejs-restapi-sequelize-mysql-feature-image.png)|
-|:--:|
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Node.js_logo_2015.svg/1182px-Node.js_logo_2015.svg.png" width="50%">
+</p>
 
 # APIs
 
