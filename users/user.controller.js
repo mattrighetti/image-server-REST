@@ -4,7 +4,6 @@ const userService = require('./user.services')
 
 module.exports = router;
 
-
 // REST APIs
 router.post('/register', function (req, res) {
     userService.registerUser(req.body)
@@ -24,8 +23,16 @@ router.post('/login', function (req, res, next) {
         });
 })
 
-router.get('/getAll', function (req, res, next) {
+router.get('/users', function (req, res, next) {
     userService.getAll()
+        .then(users => res.json(users))
+        .catch(err => next(err));
+})
+
+router.get('/users/:userId', function (req, res, next) {
+    let userId = parseInt(req.params.userId)
+    console.log("Requesting user " + userId)
+    userService.getUser(userId)
         .then(users => res.json(users))
         .catch(err => next(err));
 })

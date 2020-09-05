@@ -7,7 +7,8 @@ const users = [{ id: 0, email: 'test', password: 'test', firstName: 'Test', last
 module.exports = {
     authenticate,
     getAll,
-    registerUser
+    registerUser,
+    getUser
 };
 
 async function authenticate({ email, password }) {
@@ -39,7 +40,7 @@ async function registerUser({ email, password }) {
         throw "Username has already been taken.";
     }
 
-    const newUser = { id: users.length + 1, email: email, password: password, firstName: email.slice('@'), lastName: ""};
+    const newUser = { id: users.length, email: email, password: password, firstName: email.slice('@'), lastName: ""};
     users.push(newUser);
 
     console.log(newUser)
@@ -52,4 +53,14 @@ async function getAll() {
         const { password, ...userWithoutPassword } = u;
         return userWithoutPassword;
     });
+}
+
+async function getUser(userId) {
+    const user = users.find(u => u.id == userId);
+    
+    if (!user) {
+        throw `User with id: ${userId} does not exist.`;
+    }
+
+    return user;
 }

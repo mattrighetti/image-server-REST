@@ -12,7 +12,11 @@ const serverPort = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(fileupload())
+app.use(fileupload({
+    useTempFiles : true,
+    tempFileDir : './tmp/',
+    debug: true
+}))
 app.use(jwt());
 
 app.use('/', require('./users/user.controller'));
