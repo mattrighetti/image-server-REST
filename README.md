@@ -1,5 +1,5 @@
 # Image Server REST
-A simple image server that uses REST APIs to register/login user
+A simple image server that uses REST APIs to register/login user and lets him/her upload images to it.
 
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Node.js_logo_2015.svg/1182px-Node.js_logo_2015.svg.png" width="50%">
@@ -282,7 +282,7 @@ A simple image server that uses REST APIs to register/login user
   --header 'Authorization: Bearer webtoken'
   ```
   
-**Get image of user**
+**Get images of user**
 ----
    Returns json data about every image that a specified user has uploaded.
 
