@@ -2,7 +2,7 @@ const config = require('config.json');
 const jwt = require('jsonwebtoken');
 
 // Database non required
-const users = [{ id: 0, email: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
+const users = [{ id: 0, email: 'test', password: 'test', firstName: 'Test'}];
 
 module.exports = {
     authenticate,
@@ -40,7 +40,7 @@ async function registerUser({ email, password }) {
         throw "Username has already been taken.";
     }
 
-    const newUser = { id: users.length, email: email, password: password, firstName: email.slice('@'), lastName: ""};
+    const newUser = { id: users.length, email: email, password: password, firstName: email.slice('@')};
     users.push(newUser);
 
     console.log(newUser)

@@ -51,7 +51,9 @@ router.get("/:imageId", function (req, res, next) {
     imageService.getImage(imageId)
         .then(image => {
             res.sendFile(image, options, (err) => {
-                throw err
+                if (err) {
+                    throw err
+                }
             })
         })
         .catch(err => res.status(400).json({ message : err }));
