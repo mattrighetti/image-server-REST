@@ -14,8 +14,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(fileupload({
     useTempFiles : true,
-    tempFileDir : './tmp/',
-    debug: true
+    tempFileDir : './tmp/'
 }))
 app.use(jwt());
 

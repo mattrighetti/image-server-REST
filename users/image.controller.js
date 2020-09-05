@@ -1,4 +1,5 @@
 const config = require('config.json');
+const path = require('path')
 const jwt = require('jsonwebtoken')
 const express = require('express');
 const router = express.Router()
@@ -24,18 +25,27 @@ router.post("/uploadImage", async function (req, res, next) {
     const decoded = jwt.verify(token[1], config.secret);
     console.log(decoded)
     imageService.uploadImage(decoded.sub, req.files)
-        .then(data => {
-            console.log("Sending return data -> " + data)
-            res.json(data)
-        })
+        .then(data => { res.json(data) })
         .catch(err => res.json(err));
 });
 
 router.get("/:imageId", async function (req, res, next) {
     let imageId = parseInt(req.params.imageId)
+
+    var options = {
+        root: path.join(__dirname, '../'),
+        dotfiles: 'deny',
+        headers: {
+          'x-timestamp': Date.now(),
+          'x-sent': true
+        }
+      }
+
     imageService.getImage(imageId)
-        .then(image => res.sendFile(image, (err) => {
-            throw err
-        }))
+        .then(image => {
+            res.sendFile(image, options, (err) => {
+                throw err
+            })
+        })
         .catch(err => res.json(err));
 });
