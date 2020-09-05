@@ -7,14 +7,15 @@ var dir = './uploaded/';
 module.exports = {
     uploadImage,
     getImage,
-    getAll
+    getAll,
+    getImagesOfUserWithId
 };
 
 var ID = function () {
     return '_' + Math.random().toString(36).substr(2, 9);
 };
 
-const images = [{id: 0, image_name: 'test.png', user: 'example@email.com', date: Date()}]
+const images = [{id: 0, image_name: 'test.png', user: 1, date: Date()}]
 
 async function getAll() {
     return images.map(image => {
@@ -76,6 +77,24 @@ async function getImage(id) {
         return dir + image.image_name;
     } else {
         throw 'Image does not exist'
+    }
+
+}
+
+async function getImagesOfUserWithId(userId) {
+    let id = parseInt(userId)
+    const user_images = images.filter(image => {
+        if (image.user == id) {
+            return image
+        }
+    })
+
+    console.log(user_images)
+
+    if (user_images.length != 0) {
+        return user_images
+    } else {
+        throw `No image of ${userId} were found`
     }
 
 }

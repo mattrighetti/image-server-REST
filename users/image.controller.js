@@ -7,7 +7,7 @@ const imageService = require('./image.services')
 
 module.exports = router;
 
-router.get("/", async function (req, res, next) {
+router.get("/", function (req, res, next) {
     // I need the token to get the user data
     const usertoken = req.headers.authorization;
     const token = usertoken.split(' ');
@@ -18,7 +18,7 @@ router.get("/", async function (req, res, next) {
 });
 
 // API to upload the image
-router.post("/uploadImage", async function (req, res, next) {
+router.post("/uploadImage", function (req, res, next) {
     // I need the token to get the user data
     const usertoken = req.headers.authorization;
     const token = usertoken.split(' ');
@@ -29,7 +29,14 @@ router.post("/uploadImage", async function (req, res, next) {
         .catch(err => res.json(err));
 });
 
-router.get("/:imageId", async function (req, res, next) {
+router.get("/search", function (req, res, next) {
+    let queryUserId = req.body.user
+    imageService.getImagesOfUserWithId(queryUserId)
+        .then((images) => res.json(images))
+        .catch(err => res.json(err))
+});
+
+router.get("/:imageId", function (req, res, next) {
     let imageId = parseInt(req.params.imageId)
 
     var options = {
