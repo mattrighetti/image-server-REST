@@ -202,6 +202,10 @@ A simple image server that uses REST APIs to register/login user
 * **URL**
 
   /images/uploadImage
+  
+* **Scope**
+
+  `PRIVATE`
 
 * **Method:**
 
@@ -244,6 +248,10 @@ A simple image server that uses REST APIs to register/login user
 
   /images/:imageId
 
+* **Scope**
+
+  `PRIVATE`
+
 * **Method:**
 
   `POST`
@@ -282,6 +290,10 @@ A simple image server that uses REST APIs to register/login user
 
   /images/search
 
+* **Scope**
+
+  `PRIVATE`
+
 * **Method:**
 
   `POST`
@@ -319,11 +331,6 @@ A simple image server that uses REST APIs to register/login user
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data-urlencode 'user=111111'
   ```
-
-## Team Members
-- Mattia Righetti
-- Nicolò Felicioni
-- Luca Conterio
 
 # Backend
 
