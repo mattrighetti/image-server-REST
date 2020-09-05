@@ -8,7 +8,7 @@ module.exports = router;
 router.post('/register', function (req, res) {
     userService.registerUser(req.body)
         .then(u => res.json(u))
-        .catch(err => res.json(err));
+        .catch(err => res.status(500).json({ message: err }));
 })
 
 // API that checks if the user is in the database

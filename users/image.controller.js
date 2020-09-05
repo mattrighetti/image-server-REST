@@ -33,7 +33,7 @@ router.get("/search", function (req, res, next) {
     let queryUserId = req.body.user
     imageService.getImagesOfUserWithId(queryUserId)
         .then((images) => res.json(images))
-        .catch(err => res.json(err))
+        .catch(err => res.json({ message: err }))
 });
 
 router.get("/:imageId", function (req, res, next) {
@@ -54,5 +54,5 @@ router.get("/:imageId", function (req, res, next) {
                 throw err
             })
         })
-        .catch(err => res.json(err));
+        .catch(err => res.status(400).json({ message : err }));
 });
