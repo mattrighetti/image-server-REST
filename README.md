@@ -48,7 +48,7 @@ A simple image server that uses REST APIs to register/login user and lets him/he
  
 * **Error Response:**
 
-  * **Code:** 500 INTERNAL SERVER ERROR <br />
+  * **Code:** 400 BAD REQUEST <br />
     **Content:** `{ "message": "Username has already been taken." }`
 
 * **Sample Call:**
@@ -100,7 +100,7 @@ A simple image server that uses REST APIs to register/login user and lets him/he
  
 * **Error Response:**
 
-  * **Code:** 400 INTERNAL SERVER ERROR <br />
+  * **Code:** 400 BAD REQUEST <br />
     **Content:** `{ "message": "Username or password is incorrect" }`
 
 * **Sample Call:**
@@ -272,8 +272,13 @@ A simple image server that uses REST APIs to register/login user and lets him/he
 
 * **Error Response:**
 
-  * **Code:** 400 INTERNAL SERVER ERROR <br />
+  * **Code:** 400 BAD REQUEST <br />
     **Content:** `{ "message": "Image does not exist" }`
+    
+  OR
+  
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ "message": "Server was unable to retrieve the image." }`
 
 * **Sample Call:**
 
@@ -320,7 +325,7 @@ A simple image server that uses REST APIs to register/login user and lets him/he
 
 * **Error Response:**
 
-  * **Code:** 400 INTERNAL SERVER ERROR <br />
+  * **Code:** 400 BAD REQUEST <br />
     **Content:** `{ "message": "No image of ${user} were found" }`
 
 * **Sample Call:**
