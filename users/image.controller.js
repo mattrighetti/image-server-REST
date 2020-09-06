@@ -52,7 +52,7 @@ router.get("/:imageId", function (req, res, next) {
         .then(image => {
             res.sendFile(image, options, (err) => {
                 if (err) {
-                    throw err
+                    res.status(500).json({ message : "Server was unable to retrieve the image." });
                 }
             })
         })
