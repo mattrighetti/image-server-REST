@@ -235,7 +235,7 @@ A simple image server that uses REST APIs to register/login user and lets him/he
 * **Sample Call:**
 
   ```bash
-  curl --location --request POST 'localhost:5000/images/uploadImage' \
+  curl --location --request POST 'localhost/images/uploadImage' \
   --header 'Authorization: Bearer webtoken' \
   --form 'image=@/Users/example/folder/image.png'
   ```
@@ -283,7 +283,7 @@ A simple image server that uses REST APIs to register/login user and lets him/he
 * **Sample Call:**
 
   ```bash
-  curl --location --request GET 'localhost:5000/images/1123' \
+  curl --location --request GET 'localhost/images/1123' \
   --header 'Authorization: Bearer webtoken'
   ```
   
@@ -331,7 +331,7 @@ A simple image server that uses REST APIs to register/login user and lets him/he
 * **Sample Call:**
 
   ```bash
-  curl --location --request GET 'localhost:5000/images/search' \
+  curl --location --request GET 'localhost/images/search' \
   --header 'Authorization: Bearer webtoken' \
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data-urlencode 'user=111111'
